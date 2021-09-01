@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShoppingList.Models
 {
-    public class Person
+    public class User
     {   
         [BsonId]
         public Guid Id { get; set; }
@@ -14,10 +14,6 @@ namespace ShoppingList.Models
         public string LastName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-
-
-
-
 
     }
 }

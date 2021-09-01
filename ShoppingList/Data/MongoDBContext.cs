@@ -12,7 +12,7 @@ namespace ShoppingList.Data
         public static string DatabaseName { get; set; }
         public static bool IsSSL { get; set; }
 
-        private IMongoDatabase _database { get; }
+        public IMongoDatabase _database { get; }
 
         public MongoDBContext()
         {

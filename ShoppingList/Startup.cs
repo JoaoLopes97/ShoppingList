@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ShoppingList.Data;
+using ShoppingList.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace ShoppingList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             MongoDBContext.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
             MongoDBContext.DatabaseName = Configuration.GetSection("MongoConnection:Database").Value;
