@@ -21,10 +21,10 @@ namespace ShoppingList.Data.Repositories
         public List<User> Get() =>
            _users.Find(user => true).ToList();
 
-        public User Get(Guid id) =>
+        public User Get(string id) =>
             _users.Find<User>(user => user.Id == id).FirstOrDefault();
 
-        public User Get(string email) =>
+        public User GetByEmail(string email) =>
             _users.Find<User>(user => user.Email == email).FirstOrDefault();
 
         public User Create(User user)
@@ -33,13 +33,13 @@ namespace ShoppingList.Data.Repositories
             return user;
         }
 
-        public void Update(Guid id, User user) =>
+        public void Update(string id, User user) =>
             _users.ReplaceOne(user => user.Id == id, user);
 
         public void Remove(User user) =>
             _users.DeleteOne(u => u.Id == user.Id);
 
-        public void Remove(Guid id) =>
+        public void Remove(string id) =>
             _users.DeleteOne(user => user.Id == id);
     }
 

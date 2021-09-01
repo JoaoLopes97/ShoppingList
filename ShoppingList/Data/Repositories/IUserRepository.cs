@@ -10,16 +10,16 @@ namespace ShoppingList.Data.Repositories
     {
         public List<User> Get();
 
-        public User Get(Guid id);
+        public User Get(string id);
 
-        public User Get(string email);
+        public User GetByEmail(string email);
 
         public User Create(User user);
 
-        public void Update(Guid id, User user);
+        public void Update(string id, User user);
 
         public void Remove(User user);
 
-        public void Remove(Guid id);
+        public void Remove(string id);
     }
 }

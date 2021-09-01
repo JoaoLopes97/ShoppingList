@@ -8,39 +8,39 @@ namespace ShoppingList.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IUserModelMapping userModelMapping;
+        private readonly IUserRepository _userRepository;
+        private readonly IUserModelMapping _userModelMapping;
 
         public UserService(IUserRepository userRepository, IUserModelMapping userModelMapping)
         {
-            this.userRepository = userRepository;
-            this.userModelMapping = userModelMapping;
+            _userRepository = userRepository;
+            _userModelMapping = userModelMapping;
         }
 
-        public List<UserModel> GetUsers() => userModelMapping.UserToUserModel(userRepository.Get());
+        public List<UserModel> GetUsers() => _userModelMapping.UserToUserModel(_userRepository.Get());
 
 
-        public UserModel GetUserById(Guid id) => userModelMapping.UserToUserModel(userRepository.Get(id));
+        public UserModel GetUserById(string id) => _userModelMapping.UserToUserModel(_userRepository.Get(id));
 
-        public UserModel GetUserById(string email) => userModelMapping.UserToUserModel(userRepository.Get(email));
+        public UserModel GetUserByEmail(string email) => _userModelMapping.UserToUserModel(_userRepository.GetByEmail(email));
 
         public bool CreateUser(UserModel userModel)
         {
-            User user = userModelMapping.UserModelToUser(userModel);
+            User user = _userModelMapping.UserModelToUser(userModel);
 
-            return userRepository.Create(user) is not null;
+            return _userRepository.Create(user) is not null;
         }
 
-        public void UpdateUser(Guid id, UserModel userModel)
+        public void UpdateUser(string id, UserModel userModel)
         {
-            User user = userModelMapping.UserModelToUser(userModel);
+            User user = _userModelMapping.UserModelToUser(userModel);
 
-            userRepository.Update(id,user);
+            _userRepository.Update(id,user);
         }
 
-        public void RemoveUser(UserModel userModel) => userRepository.Remove(userModelMapping.UserModelToUser(userModel));
+        public void RemoveUser(UserModel userModel) => _userRepository.Remove(_userModelMapping.UserModelToUser(userModel));
 
-        public void RemoveUser(Guid id) => userRepository.Remove(id);
+        public void RemoveUser(string id) => _userRepository.Remove(id);
     }
 
 }

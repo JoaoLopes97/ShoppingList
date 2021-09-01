@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ShoppingList.Data;
 using ShoppingList.Data.Repositories;
+using ShoppingList.Services;
+using ShoppingList.Services.Mappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,8 @@ namespace ShoppingList
         {
             services.AddControllers();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserModelMapping, UserModelMapping>();
+            services.AddScoped<IUserService, UserService>();
 
             MongoDBContext.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
             MongoDBContext.DatabaseName = Configuration.GetSection("MongoConnection:Database").Value;

@@ -9,15 +9,15 @@ namespace ShoppingList.Services
     {
         public List<UserModel> GetUsers();
 
-        public UserModel GetUserById(Guid id);
+        public UserModel GetUserById(string id);
 
-        public UserModel GetUserById(string email);
+        public UserModel GetUserByEmail(string email);
 
         public bool CreateUser(UserModel userModel);
 
-        public void UpdateUser(Guid id, UserModel userModel);
+        public void UpdateUser(string id, UserModel userModel);
         public void RemoveUser(UserModel userModel);
 
-        public void RemoveUser(Guid id);
+        public void RemoveUser(string id);
     }
 }
