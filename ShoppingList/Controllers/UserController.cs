@@ -26,5 +26,18 @@ namespace ShoppingList.Controllers
         {
             return _userService.GetUsers();
         }
+
+        [HttpPost]
+        public bool CreateUser()
+        {
+            UserModel userModel = new()
+            {
+                FirstName = "JOAO",
+                LastName = "lopes",
+                Email = "joao@hotmail.com",
+                Password = "Ola_123456"
+            };
+            return _userService.CreateUser(userModel);
+        }
     }
 }

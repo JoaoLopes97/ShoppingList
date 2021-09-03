@@ -19,28 +19,16 @@ namespace ShoppingList.Services
 
         public List<UserModel> GetUsers() => _userModelMapping.UserToUserModel(_userRepository.Get());
 
+        public UserModel GetUserById(string id) => _userModelMapping.UserToUserModel(_userRepository.Get(id).Result);
 
-        public UserModel GetUserById(string id) => _userModelMapping.UserToUserModel(_userRepository.Get(id));
-
-        public UserModel GetUserByEmail(string email) => _userModelMapping.UserToUserModel(_userRepository.GetByEmail(email));
+        public UserModel GetUserByEmail(string email) => _userModelMapping.UserToUserModel(_userRepository.GetByEmail(email).Result);
 
         public bool CreateUser(UserModel userModel)
         {
             User user = _userModelMapping.UserModelToUser(userModel);
 
-            return _userRepository.Create(user) is not null;
+            return _userRepository.Create(user).Result;
         }
-
-        public void UpdateUser(string id, UserModel userModel)
-        {
-            User user = _userModelMapping.UserModelToUser(userModel);
-
-            _userRepository.Update(id,user);
-        }
-
-        public void RemoveUser(UserModel userModel) => _userRepository.Remove(_userModelMapping.UserModelToUser(userModel));
-
-        public void RemoveUser(string id) => _userRepository.Remove(id);
     }
 
 }

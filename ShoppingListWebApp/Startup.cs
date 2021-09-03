@@ -1,23 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using ShoppingList.Data;
-using ShoppingList.Data.Repositories;
-using ShoppingList.Services;
-using ShoppingList.Services.Mappers;
-using ShoppingListAPI.Data.Mappers;
-using ShoppingListAPI.Data.Models;
+using ShoppingListWebApp.Helpers;
+using ShoppingListWebApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ShoppingList
+namespace ShoppingListWebApp
 {
     public class Startup
     {
@@ -31,19 +25,9 @@ namespace ShoppingList
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserModelMapping, UserModelMapping>();
-            services.AddScoped<IUserMapping, UserMapping>();
+            services.AddControllersWithViews();
             services.AddScoped<IUserService, UserService>();
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-            .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>
-            (
-                Configuration.GetSection("MongoConnection:ConnectionString").Value,
-                Configuration.GetSection("MongoConnection:Database").Value
-            );
-
+            services.AddSingleton<IAPIHelper, APIHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,8 +37,14 @@ namespace ShoppingList
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -62,7 +52,9 @@ namespace ShoppingList
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

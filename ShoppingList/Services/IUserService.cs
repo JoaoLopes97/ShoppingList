@@ -15,9 +15,5 @@ namespace ShoppingList.Services
 
         public bool CreateUser(UserModel userModel);
 
-        public void UpdateUser(string id, UserModel userModel);
-        public void RemoveUser(UserModel userModel);
-
-        public void RemoveUser(string id);
     }
 }

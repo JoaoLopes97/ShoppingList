@@ -1,5 +1,8 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.AspNetCore.Identity;
+using MongoDB.Driver;
 using ShoppingList.Models;
+using ShoppingListAPI.Data.Mappers;
+using ShoppingListAPI.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,38 +12,29 @@ namespace ShoppingList.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IMongoCollection<User> _users;
+        private UserManager<ApplicationUser> _userManager;
+        private IUserMapping _userMapping;
 
-        public UserRepository()
+        public UserRepository(UserManager<ApplicationUser> userManager, IUserMapping userMapping)
         {
-            MongoDBContext mongoDBContext = new();
-
-            _users = mongoDBContext._database.GetCollection<User>("Users");
+            _userMapping = userMapping;
+            _userManager = userManager;
         }
 
-        public List<User> Get() =>
-           _users.Find(user => true).ToList();
+        public List<User> Get() => _userMapping.AppUserToUser(_userManager.Users.ToList());
 
-        public User Get(string id) =>
-            _users.Find<User>(user => user.Id == id).FirstOrDefault();
+        public async Task<User> Get(string id) => _userMapping.AppUserToUser(await _userManager.FindByIdAsync(id));
 
-        public User GetByEmail(string email) =>
-            _users.Find<User>(user => user.Email == email).FirstOrDefault();
+        public async Task<User> GetByEmail(string email) => _userMapping.AppUserToUser(await _userManager.FindByEmailAsync(email));
 
-        public User Create(User user)
+        public async Task<bool> Create(User user)
         {
-            _users.InsertOne(user);
-            return user;
+            ApplicationUser appUser = _userMapping.UserToAppUser(user);
+
+            IdentityResult result = await _userManager.CreateAsync(appUser, user.Password);
+            return result.Succeeded;
         }
 
-        public void Update(string id, User user) =>
-            _users.ReplaceOne(user => user.Id == id, user);
-
-        public void Remove(User user) =>
-            _users.DeleteOne(u => u.Id == user.Id);
-
-        public void Remove(string id) =>
-            _users.DeleteOne(user => user.Id == id);
     }
 
 }

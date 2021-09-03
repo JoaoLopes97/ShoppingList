@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingList", "ShoppingList\ShoppingList.csproj", "{653836C9-C9D5-469C-AD24-35F8956D2098}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingListAPI", "ShoppingList\ShoppingListAPI.csproj", "{653836C9-C9D5-469C-AD24-35F8956D2098}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingListWebApp", "ShoppingListWebApp\ShoppingListWebApp.csproj", "{473FB2E6-BEA2-429D-84DE-61C618CFDA8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{653836C9-C9D5-469C-AD24-35F8956D2098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{653836C9-C9D5-469C-AD24-35F8956D2098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{653836C9-C9D5-469C-AD24-35F8956D2098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473FB2E6-BEA2-429D-84DE-61C618CFDA8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473FB2E6-BEA2-429D-84DE-61C618CFDA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473FB2E6-BEA2-429D-84DE-61C618CFDA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473FB2E6-BEA2-429D-84DE-61C618CFDA8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
